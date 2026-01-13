@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>JP Stock Verdict Guru</title>
 
+<!-- MUST for mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JP Stock Verdict Guru</title>
 
 <!-- JP Logo in browser tab -->
 <link rel="icon" type="image/png" href="/static/jp.png">
-
 
 <style>
 :root{
@@ -31,60 +33,67 @@ body{
   color:var(--text);
 }
 
-/* ===== HEADER ===== */
+/* ================= HEADER ================= */
 .header{
   display:flex;
   align-items:center;
-  gap:14px;
-  padding:18px 28px;
+  gap:12px;
+  padding:14px 18px;
   border-bottom:1px solid var(--border);
 }
 .header img{
-  width:42px;
-  height:42px;
+  width:38px;
+  height:38px;
+  flex-shrink:0;
 }
 .header h1{
   margin:0;
-  font-size:20px;
+  font-size:18px;
   color:var(--blue);
+  line-height:1.2;
 }
 .header p{
   margin:2px 0 0;
-  font-size:12px;
+  font-size:11px;
   color:var(--muted);
 }
 
-/* ===== CONTAINER ===== */
-.container{ padding:26px 28px; }
+/* ================= CONTAINER ================= */
+.container{
+  padding:18px;
+}
 
-/* ===== STEP FLOW ===== */
+/* ================= STEPS ================= */
 .steps{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-  margin-bottom:24px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin-bottom:20px;
 }
 .step{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:8px;
-  padding:14px;
-  font-size:13px;
+  padding:12px;
+  font-size:12.5px;
 }
 .step span{
   color:var(--blue);
   font-weight:600;
-  font-size:12px;
+  font-size:11px;
 }
 
-/* ===== INPUT ===== */
+/* ================= INPUT ================= */
 .input-bar{
   display:flex;
   gap:12px;
-  align-items:flex-start;
+  flex-wrap:wrap;
+  align-items:stretch;
 }
+
 textarea{
-  width:260px;
+  width:100%;
+  max-width:320px;
   height:90px;
   background:var(--card);
   color:var(--text);
@@ -98,8 +107,9 @@ textarea:focus{
   outline:none;
   border-color:var(--blue);
 }
+
 button{
-  height:40px;
+  height:42px;
   padding:0 22px;
   border:none;
   border-radius:6px;
@@ -113,21 +123,28 @@ button:hover{
   transform:translateY(-1px);
   box-shadow:0 6px 14px rgba(46,160,67,.35);
 }
+button:active{
+  transform:scale(.98);
+}
 
-/* ===== TABLE ===== */
+/* ================= TABLE ================= */
 .table-wrap{
-  margin-top:22px;
+  margin-top:20px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:8px;
-  overflow:hidden;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
   display:none;
 }
+
 table{
   width:100%;
+  min-width:1000px;
   border-collapse:collapse;
   font-size:12.5px;
 }
+
 thead th{
   position:sticky;
   top:0;
@@ -135,28 +152,32 @@ thead th{
   color:var(--blue);
   padding:10px;
   border-bottom:1px solid var(--border);
+  white-space:nowrap;
 }
+
 tbody td{
   padding:9px;
   border-bottom:1px solid #21262d;
   text-align:center;
+  white-space:nowrap;
 }
+
 tbody tr:hover{
   background:rgba(88,166,255,.05);
 }
 
-/* ===== VERDICT COLORS ===== */
+/* ================= VERDICT ================= */
 .BUY{ color:var(--buy); font-weight:600; }
 .WATCH{ color:var(--watch); font-weight:600; }
 .AVOID{ color:var(--avoid); font-weight:600; }
 
-/* ===== HELP ===== */
+/* ================= HELP ================= */
 details{
-  margin-top:22px;
+  margin-top:20px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:8px;
-  padding:14px 16px;
+  padding:14px;
 }
 summary{
   cursor:pointer;
@@ -178,23 +199,30 @@ summary{
   font-size:11px;
   color:var(--muted);
 }
+
+/* ================= MOBILE TWEAKS ================= */
+@media (max-width:480px){
+  .header h1{ font-size:16px; }
+  textarea{ max-width:100%; }
+  button{ width:100%; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 <div class="header">
   <img src="/static/jp.png" alt="JP Logo">
   <div>
-    <h1>JP Stock Verdict Guru </h1>
+    <h1>JP Stock Verdict Guru</h1>
     <p>Step-by-step fundamental stock analysis</p>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- INVESTING FLOW -->
+  <!-- ================= STEPS ================= -->
   <div class="steps">
     <div class="step"><span>STEP 1</span><br><b>ROE & ROCE</b><br>Business & capital efficiency</div>
     <div class="step"><span>STEP 2</span><br><b>P/E & Book Value</b><br>Valuation check</div>
@@ -203,7 +231,7 @@ summary{
     <div class="step"><span>STEP 5</span><br><b>Score → Verdict</b><br>Final decision</div>
   </div>
 
-  <!-- INPUT -->
+  <!-- ================= INPUT ================= -->
   <div class="input-bar">
     <textarea id="stocks">ITC
 VEDL
@@ -211,7 +239,7 @@ COALINDIA</textarea>
     <button onclick="analyze()">Analyze</button>
   </div>
 
-  <!-- RESULTS -->
+  <!-- ================= RESULTS ================= -->
   <div id="results" class="table-wrap">
     <table>
       <thead>
@@ -236,7 +264,7 @@ COALINDIA</textarea>
     </table>
   </div>
 
-  <!-- HELP -->
+  <!-- ================= HELP ================= -->
   <details>
     <summary>📘 How to read these parameters</summary>
     <table class="help-table">
@@ -245,8 +273,8 @@ COALINDIA</textarea>
       <tr><td><b>52W High / Low</b></td><td>1-year price range</td></tr>
       <tr><td><b>P/E</b></td><td>Valuation vs earnings</td></tr>
       <tr><td><b>Book Value</b></td><td>Net asset value per share</td></tr>
-      <tr><td><b>ROE</b></td><td>Return on Equity (shareholder efficiency)</td></tr>
-      <tr><td><b>ROCE</b></td><td>Return on Capital Employed (business efficiency)</td></tr>
+      <tr><td><b>ROE</b></td><td>Return on Equity</td></tr>
+      <tr><td><b>ROCE</b></td><td>Return on Capital Employed</td></tr>
       <tr><td><b>Dividend %</b></td><td>Annual income return</td></tr>
       <tr><td><b>Score</b></td><td>Overall fundamental strength (0–6)</td></tr>
       <tr>
