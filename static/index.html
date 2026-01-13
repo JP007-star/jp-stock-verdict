@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Stock Analyzer</title>
+  <style>
+    body { font-family: Arial; padding: 30px; }
+    textarea { width: 260px; height: 120px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 6px; }
+    th { background: #eee; }
+    .BUY { color: green; font-weight: bold; }
+    .WATCH { color: orange; font-weight: bold; }
+    .AVOID { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>📊 Simple Stock Analyzer</h2>
+
+<textarea id="stocks">
+ITC
+VEDL
+COALINDIA
+</textarea><br><br>
+
+<button onclick="analyze()">Analyze</button>
+
+<table id="table" style="display:none">
+  <thead>
+    <tr>
+      <th>Stock</th>
+      <th>Price</th>
+      <th>Market Cap (₹ Cr)</th>
+      <th>52W High</th>
+      <th>52W Low</th>
+      <th>P/E</th>
+      <th>Book Value</th>
+      <th>ROE</th>
+      <th>ROCE</th>
+      <th>Div %</th>
+      <th>Face Value</th>
+      <th>Score</th>
+      <th>Verdict</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+function analyze() {
+  const stocks = document.getElementById("stocks").value
+    .split("\n")
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+
+  fetch("/analyze", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ stocks })
+  })
+  .then(r => r.json())
+  .then(data => {
+    const tbody = document.querySelector("#table tbody");
+    tbody.innerHTML = "";
+    data.forEach(r => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${r.Stock}</td>
+          <td>${r.Price}</td>
+          <td>${r["Market Cap (₹ Cr)"]}</td>
+          <td>${r["52W High"]}</td>
+          <td>${r["52W Low"]}</td>
+          <td>${r["P/E"]}</td>
+          <td>${r["Book Value"]}</td>
+          <td>${r.ROE}</td>
+          <td>${r.ROCE}</td>
+          <td>${r["Div %"]}</td>
+          <td>${r["Face Value"]}</td>
+          <td>${r.Score}</td>
+          <td class="${r.Verdict}">${r.Verdict}</td>
+          <td>${r.Remarks}</td>
+        </tr>`;
+    });
+    document.getElementById("table").style.display = "table";
+  });
+}
+</script>
+
+</body>
+</html>
