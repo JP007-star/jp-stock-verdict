@@ -1,6 +1,7 @@
+import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from data_engine import analyze
+from engine import analyze
 
 app = Flask(__name__, static_folder="static")
 CORS(app)
@@ -22,4 +23,6 @@ def analyze_api():
     return jsonify(results)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # ✅ REQUIRED FOR RENDER
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
