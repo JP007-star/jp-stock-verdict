@@ -4,52 +4,59 @@ from bs4 import BeautifulSoup
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
+def safe_float(x):
+    try:
+        return float(x)
+    except:
+        return None
+
 # -----------------------------
-# YAHOO DATA (STABLE + CLEAN)
+# YAHOO DATA (SAFE)
 # -----------------------------
 def get_yahoo(stock):
-    t = yf.Ticker(f"{stock}.NS")
-    info = t.info or {}
+    try:
+        t = yf.Ticker(f"{stock}.NS")
+        info = t.info or {}
 
-    raw_div = info.get("dividendYield")
-    if raw_div is None:
-        div_yield = None
-    elif raw_div > 1:
-        div_yield = round(raw_div, 2)
-    else:
-        div_yield = round(raw_div * 100, 2)
+        raw_div = info.get("dividendYield")
+        if raw_div is None:
+            div_yield = None
+        elif raw_div > 1:
+            div_yield = round(raw_div, 2)
+        else:
+            div_yield = round(raw_div * 100, 2)
 
-    return {
-        "price": info.get("currentPrice"),
-        "market_cap_cr": (
-            round(info.get("marketCap") / 1e7, 2)
-            if info.get("marketCap") else None
-        ),
-        "52w_high": info.get("fiftyTwoWeekHigh"),
-        "52w_low": info.get("fiftyTwoWeekLow"),
-        "pe": info.get("trailingPE"),
-        "book_value": info.get("bookValue"),
-        "roe": (
-            round(info.get("returnOnEquity") * 100, 2)
-            if info.get("returnOnEquity") else None
-        ),
-        "div_yield": div_yield,
-        "debt_equity": info.get("debtToEquity")
-    }
+        return {
+            "price": info.get("currentPrice"),
+            "market_cap": info.get("marketCap"),
+            "52w_high": info.get("fiftyTwoWeekHigh"),
+            "52w_low": info.get("fiftyTwoWeekLow"),
+            "pe": info.get("trailingPE"),
+            "book_value": info.get("bookValue"),
+            "roe": (
+                round(info.get("returnOnEquity") * 100, 2)
+                if info.get("returnOnEquity") else None
+            ),
+            "div_yield": div_yield,
+            "debt_equity": info.get("debtToEquity")
+        }
+    except Exception as e:
+        return {}
 
 # -----------------------------
-# SCREENER (ONLY RELIABLE FIELD)
+# SCREENER (SAFE)
 # -----------------------------
 def get_screener(stock):
     try:
-        soup = BeautifulSoup(
-            requests.get(
-                f"https://www.screener.in/company/{stock}/",
-                headers=HEADERS,
-                timeout=10
-            ).text,
-            "lxml"
+        r = requests.get(
+            f"https://www.screener.in/company/{stock}/",
+            headers=HEADERS,
+            timeout=8
         )
+        if r.status_code != 200:
+            return {"roce": None, "face_value": None}
+
+        soup = BeautifulSoup(r.text, "lxml")
 
         data = {}
         for li in soup.select("li"):
@@ -60,20 +67,17 @@ def get_screener(stock):
 
         roce = None
         if data.get("ROCE"):
-            roce = float(data["ROCE"].replace("%", "").strip())
+            roce = safe_float(data["ROCE"].replace("%", ""))
 
         return {
             "roce": roce,
             "face_value": data.get("Face Value")
         }
     except:
-        return {
-            "roce": None,
-            "face_value": None
-        }
+        return {"roce": None, "face_value": None}
 
 # -----------------------------
-# ANALYSIS + SCORING
+# ANALYSIS (NEVER FAILS)
 # -----------------------------
 def analyze(stock):
     if not stock or not stock.strip():
@@ -87,38 +91,40 @@ def analyze(stock):
     score = 0
     remarks = []
 
-    # ROE
-    if y["roe"] and y["roe"] >= 15:
+    roe = y.get("roe")
+    roce = s.get("roce")
+    pe = y.get("pe")
+    div = y.get("div_yield")
+    price = y.get("price")
+    high = y.get("52w_high")
+    debt = y.get("debt_equity")
+
+    if roe and roe >= 15:
         score += 1
     else:
         remarks.append("Low ROE")
 
-    # ROCE
-    if s["roce"] and s["roce"] >= 15:
+    if roce and roce >= 15:
         score += 1
     else:
         remarks.append("Low ROCE")
 
-    # PE
-    if y["pe"] and y["pe"] <= 25:
+    if pe and pe <= 25:
         score += 1
     else:
         remarks.append("High PE")
 
-    # Debt (ignore if ROCE strong)
-    if (y["debt_equity"] is None or y["debt_equity"] <= 1) or (s["roce"] and s["roce"] >= 25):
+    if (debt is None or debt <= 1) or (roce and roce >= 25):
         score += 1
     else:
         remarks.append("High Debt")
 
-    # Dividend
-    if y["div_yield"] and y["div_yield"] >= 1:
+    if div and div >= 1:
         score += 1
     else:
         remarks.append("Low Dividend")
 
-    # Price vs 52W High
-    if y["price"] and y["52w_high"] and y["price"] <= 0.9 * y["52w_high"]:
+    if price and high and price <= 0.9 * high:
         score += 1
     else:
         remarks.append("Near 52W High")
@@ -127,16 +133,13 @@ def analyze(stock):
 
     return {
         "Stock": stock,
-        "Price": y["price"],
-        "Market Cap (₹ Cr)": y["market_cap_cr"],
-        "52W High": y["52w_high"],
-        "52W Low": y["52w_low"],
-        "P/E": y["pe"],
-        "Book Value": y["book_value"],
-        "ROE": y["roe"],
-        "ROCE": s["roce"],
-        "Div %": y["div_yield"],
-        "Face Value": s["face_value"],
+        "Price": price,
+        "52W High": high,
+        "52W Low": y.get("52w_low"),
+        "P/E": pe,
+        "ROE": roe,
+        "ROCE": roce,
+        "Div %": div,
         "Score": score,
         "Verdict": verdict,
         "Remarks": ", ".join(remarks)

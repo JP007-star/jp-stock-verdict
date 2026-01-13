@@ -12,17 +12,25 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze_api():
-    stocks = request.json.get("stocks", [])
-    results = []
+    try:
+        data = request.get_json(force=True)
+        stocks = data.get("stocks", [])
+        results = []
 
-    for s in stocks:
-        r = analyze(s)
-        if r:
-            results.append(r)
+        for s in stocks:
+            r = analyze(s)
+            if r:
+                results.append(r)
 
-    return jsonify(results)
+        return jsonify(results)
+
+    except Exception as e:
+        # 🔥 CRITICAL: always return JSON
+        return jsonify({
+            "error": "Internal error",
+            "details": str(e)
+        }), 500
 
 if __name__ == "__main__":
-    # ✅ REQUIRED FOR RENDER
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
