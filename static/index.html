@@ -5,150 +5,173 @@
 <title>JP StockVerdict</title>
 
 <style>
-:root {
-  --bg-main:#0d1117;
-  --bg-card:#161b22;
+:root{
+  --bg:#0d1117;
+  --card:#161b22;
   --border:#30363d;
-  --text-main:#c9d1d9;
-  --text-muted:#8b949e;
-  --accent:#58a6ff;
-
+  --text:#c9d1d9;
+  --muted:#8b949e;
+  --blue:#58a6ff;
   --buy:#3fb950;
   --watch:#d29922;
   --avoid:#f85149;
 }
 
-* { box-sizing:border-box; }
+*{ box-sizing:border-box; }
 
-body {
+body{
   margin:0;
-  font-family:"Segoe UI", Roboto, Arial, sans-serif;
-  background:var(--bg-main);
-  color:var(--text-main);
+  font-family:Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
 /* ===== HEADER ===== */
-.header {
-  padding:16px 28px;
+.header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:18px 28px;
   border-bottom:1px solid var(--border);
 }
-.header h1 {
-  margin:0;
-  font-size:18px;
-  color:var(--accent);
+.header img{
+  width:42px;
+  height:42px;
 }
-.header p {
-  margin:4px 0 0;
+.header h1{
+  margin:0;
+  font-size:20px;
+  color:var(--blue);
+}
+.header p{
+  margin:2px 0 0;
   font-size:12px;
-  color:var(--text-muted);
+  color:var(--muted);
 }
 
-/* ===== LAYOUT ===== */
-.container {
-  padding:24px 28px;
+/* ===== CONTAINER ===== */
+.container{ padding:26px 28px; }
+
+/* ===== STEP FLOW ===== */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-bottom:24px;
+}
+.step{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:14px;
+  font-size:13px;
+}
+.step span{
+  color:var(--blue);
+  font-weight:600;
+  font-size:12px;
 }
 
 /* ===== INPUT ===== */
-.input-bar {
+.input-bar{
   display:flex;
-  gap:14px;
+  gap:12px;
   align-items:flex-start;
 }
-textarea {
+textarea{
   width:260px;
   height:90px;
-  background:var(--bg-card);
-  color:var(--text-main);
+  background:var(--card);
+  color:var(--text);
   border:1px solid var(--border);
   border-radius:6px;
   padding:10px;
   font-size:13px;
   resize:none;
 }
-textarea:focus {
+textarea:focus{
   outline:none;
-  border-color:var(--accent);
+  border-color:var(--blue);
 }
-button {
+button{
   height:40px;
   padding:0 22px;
-  background:linear-gradient(135deg,#238636,#2ea043);
-  color:#fff;
   border:none;
   border-radius:6px;
   font-size:13px;
+  color:#fff;
+  background:linear-gradient(135deg,#238636,#2ea043);
   cursor:pointer;
   transition:.15s;
 }
-button:hover {
+button:hover{
   transform:translateY(-1px);
-  box-shadow:0 6px 16px rgba(46,160,67,.35);
+  box-shadow:0 6px 14px rgba(46,160,67,.35);
 }
 
 /* ===== TABLE ===== */
-.table-wrap {
-  margin-top:18px;
-  background:var(--bg-card);
+.table-wrap{
+  margin-top:22px;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:8px;
   overflow:hidden;
   display:none;
 }
-table {
+table{
   width:100%;
   border-collapse:collapse;
   font-size:12.5px;
 }
-thead th {
+thead th{
   position:sticky;
   top:0;
-  background:var(--bg-main);
-  color:var(--accent);
+  background:var(--bg);
+  color:var(--blue);
   padding:10px;
   border-bottom:1px solid var(--border);
-  text-align:center;
 }
-tbody td {
+tbody td{
   padding:9px;
   border-bottom:1px solid #21262d;
   text-align:center;
 }
-tbody tr:hover {
+tbody tr:hover{
   background:rgba(88,166,255,.05);
 }
 
-/* ===== VERDICTS ===== */
-.BUY { color:var(--buy); font-weight:600; }
-.WATCH { color:var(--watch); font-weight:600; }
-.AVOID { color:var(--avoid); font-weight:600; }
+/* ===== VERDICT COLORS ===== */
+.BUY{ color:var(--buy); font-weight:600; }
+.WATCH{ color:var(--watch); font-weight:600; }
+.AVOID{ color:var(--avoid); font-weight:600; }
 
-/* ===== TEACHING SECTION ===== */
-details {
+/* ===== HELP ===== */
+details{
   margin-top:22px;
-  background:var(--bg-card);
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:8px;
   padding:14px 16px;
 }
-summary {
+summary{
   cursor:pointer;
+  color:var(--blue);
   font-size:13px;
-  color:var(--accent);
 }
-.help-table {
+.help-table{
   width:100%;
   margin-top:12px;
   font-size:12.5px;
   border-collapse:collapse;
 }
-.help-table td {
+.help-table td{
   padding:7px;
   border-bottom:1px solid #21262d;
 }
-.footer-note {
-  margin-top:8px;
+.footer-note{
+  margin-top:10px;
   font-size:11px;
-  color:var(--text-muted);
+  color:var(--muted);
 }
 </style>
 </head>
@@ -157,11 +180,23 @@ summary {
 
 <!-- HEADER -->
 <div class="header">
-  <h1>JP StockVerdict</h1>
-  <p>Fundamental score-based stock analysis</p>
+  <img src="/static/jp.png" alt="JP Logo">
+  <div>
+    <h1>JP StockVerdict</h1>
+    <p>Step-by-step fundamental stock analysis</p>
+  </div>
 </div>
 
 <div class="container">
+
+  <!-- INVESTING FLOW -->
+  <div class="steps">
+    <div class="step"><span>STEP 1</span><br><b>ROE & ROCE</b><br>Business & capital efficiency</div>
+    <div class="step"><span>STEP 2</span><br><b>P/E & Book Value</b><br>Valuation check</div>
+    <div class="step"><span>STEP 3</span><br><b>52W High / Low</b><br>Risk & timing</div>
+    <div class="step"><span>STEP 4</span><br><b>Dividend</b><br>Income quality</div>
+    <div class="step"><span>STEP 5</span><br><b>Score → Verdict</b><br>Final decision</div>
+  </div>
 
   <!-- INPUT -->
   <div class="input-bar">
@@ -177,15 +212,16 @@ COALINDIA</textarea>
       <thead>
         <tr>
           <th>Stock</th>
-          <th>LTP</th>
-          <th>M.Cap</th>
-          <th>52W H</th>
-          <th>52W L</th>
+          <th>Price</th>
+          <th>Market Cap (₹ Cr)</th>
+          <th>52W High</th>
+          <th>52W Low</th>
           <th>P/E</th>
-          <th>BV</th>
+          <th>Book Value</th>
           <th>ROE</th>
           <th>ROCE</th>
           <th>Div %</th>
+          <th>Face Value</th>
           <th>Score</th>
           <th>Verdict</th>
           <th>Remarks</th>
@@ -195,45 +231,37 @@ COALINDIA</textarea>
     </table>
   </div>
 
-  <!-- TEACHING / HELP -->
+  <!-- HELP -->
   <details>
-    <summary>📘 How to Invest – Key Metrics & Steps</summary>
-
+    <summary>📘 How to read these parameters</summary>
     <table class="help-table">
-      <tr><td><b>LTP</b></td><td>Last Traded Price (current market price)</td></tr>
-      <tr><td><b>M.Cap</b></td><td>Total market value of the company</td></tr>
-      <tr><td><b>52W H/L</b></td><td>Price range in the last 1 year</td></tr>
-      <tr><td><b>P/E</b></td><td>Price paid for ₹1 of earnings</td></tr>
-      <tr><td><b>BV</b></td><td>Book Value – net assets per share</td></tr>
-      <tr>
-        <td><b>ROE</b></td>
-        <td>Return on Equity – profit generated from shareholders’ capital</td>
-      </tr>
-      <tr>
-        <td><b>ROCE</b></td>
-        <td>Return on Capital Employed – profit from total business capital</td>
-      </tr>
-      <tr><td><b>Div %</b></td><td>Annual dividend income return</td></tr>
+      <tr><td><b>Price</b></td><td>Current market price</td></tr>
+      <tr><td><b>Market Cap</b></td><td>Total company valuation</td></tr>
+      <tr><td><b>52W High / Low</b></td><td>1-year price range</td></tr>
+      <tr><td><b>P/E</b></td><td>Valuation vs earnings</td></tr>
+      <tr><td><b>Book Value</b></td><td>Net asset value per share</td></tr>
+      <tr><td><b>ROE</b></td><td>Return on Equity (shareholder efficiency)</td></tr>
+      <tr><td><b>ROCE</b></td><td>Return on Capital Employed (business efficiency)</td></tr>
+      <tr><td><b>Dividend %</b></td><td>Annual income return</td></tr>
       <tr><td><b>Score</b></td><td>Overall fundamental strength (0–6)</td></tr>
       <tr>
         <td><b>Verdict</b></td>
         <td>
-          <span class="BUY">BUY</span> – Strong business<br>
-          <span class="WATCH">WATCH</span> – Mixed signals<br>
-          <span class="AVOID">AVOID</span> – Weak or risky
+          <span class="BUY">BUY</span> – strong fundamentals<br>
+          <span class="WATCH">WATCH</span> – mixed signals<br>
+          <span class="AVOID">AVOID</span> – weak or risky
         </td>
       </tr>
     </table>
-
-    <div class="footer-note">
-      ⚠️ Educational analysis only. Not investment advice.
-    </div>
+    <div class="footer-note">⚠️ Educational only. Not investment advice.</div>
   </details>
 
 </div>
 
 <script>
-function safe(v){ return (v===null||v===undefined) ? "-" : v; }
+function safe(v){
+  return (v===null || v===undefined || v==="") ? "-" : v;
+}
 
 function analyze(){
   const stocks=document.getElementById("stocks").value
@@ -250,21 +278,22 @@ function analyze(){
     tbody.innerHTML="";
     data.forEach(r=>{
       tbody.innerHTML+=`
-        <tr>
-          <td>${safe(r.Stock)}</td>
-          <td>${safe(r.Price)}</td>
-          <td>${safe(r["Market Cap (₹ Cr)"])}</td>
-          <td>${safe(r["52W High"])}</td>
-          <td>${safe(r["52W Low"])}</td>
-          <td>${safe(r["P/E"])}</td>
-          <td>${safe(r["Book Value"])}</td>
-          <td>${safe(r.ROE)}</td>
-          <td>${safe(r.ROCE)}</td>
-          <td>${safe(r["Div %"])}</td>
-          <td>${safe(r.Score)}</td>
-          <td class="${r.Verdict}">${safe(r.Verdict)}</td>
-          <td>${safe(r.Remarks)}</td>
-        </tr>`;
+      <tr>
+        <td>${safe(r.Stock)}</td>
+        <td>${safe(r.Price)}</td>
+        <td>${safe(r["Market Cap (₹ Cr)"])}</td>
+        <td>${safe(r["52W High"])}</td>
+        <td>${safe(r["52W Low"])}</td>
+        <td>${safe(r["P/E"])}</td>
+        <td>${safe(r["Book Value"])}</td>
+        <td>${safe(r.ROE)}</td>
+        <td>${safe(r.ROCE)}</td>
+        <td>${safe(r["Div %"])}</td>
+        <td>${safe(r["Face Value"])}</td>
+        <td>${safe(r.Score)}</td>
+        <td class="${r.Verdict}">${safe(r.Verdict)}</td>
+        <td>${safe(r.Remarks)}</td>
+      </tr>`;
     });
     document.getElementById("results").style.display="block";
   });
