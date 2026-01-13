@@ -1,191 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>JP StockVerdict</title>
 
 <style>
-/* ===============================
-   GLOBAL RESET & TOKENS
-================================ */
-* { box-sizing: border-box; }
-
 :root {
-  --bg-main: #0d1117;
-  --bg-card: #161b22;
-  --border: #30363d;
-  --text-main: #c9d1d9;
-  --text-muted: #8b949e;
-  --accent: #58a6ff;
+  --bg-main:#0d1117;
+  --bg-card:#161b22;
+  --border:#30363d;
+  --text-main:#c9d1d9;
+  --text-muted:#8b949e;
+  --accent:#58a6ff;
 
-  --buy: #3fb950;
-  --watch: #d29922;
-  --avoid: #f85149;
+  --buy:#3fb950;
+  --watch:#d29922;
+  --avoid:#f85149;
 }
 
-/* ===============================
-   BASE
-================================ */
+* { box-sizing:border-box; }
+
 body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--bg-main);
-  color: var(--text-main);
+  margin:0;
+  font-family:"Segoe UI", Roboto, Arial, sans-serif;
+  background:var(--bg-main);
+  color:var(--text-main);
 }
 
-/* ===============================
-   HEADER
-================================ */
+/* ===== HEADER ===== */
 .header {
-  padding: 16px 28px;
-  border-bottom: 1px solid var(--border);
+  padding:16px 28px;
+  border-bottom:1px solid var(--border);
 }
-
 .header h1 {
-  margin: 0;
-  font-size: 18px;
-  color: var(--accent);
+  margin:0;
+  font-size:18px;
+  color:var(--accent);
 }
-
 .header p {
-  margin: 4px 0 0;
-  font-size: 12px;
-  color: var(--text-muted);
+  margin:4px 0 0;
+  font-size:12px;
+  color:var(--text-muted);
 }
 
-/* ===============================
-   CONTAINER
-================================ */
+/* ===== LAYOUT ===== */
 .container {
-  padding: 24px 28px;
+  padding:24px 28px;
 }
 
-/* ===============================
-   INPUT BAR
-================================ */
+/* ===== INPUT ===== */
 .input-bar {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
 }
-
 textarea {
-  width: 260px;
-  height: 90px;
-  background: var(--bg-card);
-  color: var(--text-main);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px;
-  font-size: 13px;
-  resize: none;
+  width:260px;
+  height:90px;
+  background:var(--bg-card);
+  color:var(--text-main);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:10px;
+  font-size:13px;
+  resize:none;
 }
-
 textarea:focus {
-  outline: none;
-  border-color: var(--accent);
+  outline:none;
+  border-color:var(--accent);
 }
-
 button {
-  height: 40px;
-  padding: 0 22px;
-  background: linear-gradient(135deg, #238636, #2ea043);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease;
+  height:40px;
+  padding:0 22px;
+  background:linear-gradient(135deg,#238636,#2ea043);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+  transition:.15s;
 }
-
 button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(46,160,67,.35);
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(46,160,67,.35);
 }
 
-/* ===============================
-   TABLE
-================================ */
+/* ===== TABLE ===== */
 .table-wrap {
-  margin-top: 18px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  animation: fadeUp .4s ease;
+  margin-top:18px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  display:none;
 }
-
 table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12.5px;
+  width:100%;
+  border-collapse:collapse;
+  font-size:12.5px;
 }
-
 thead th {
-  position: sticky;
-  top: 0;
-  background: var(--bg-main);
-  color: var(--accent);
-  padding: 10px;
-  border-bottom: 1px solid var(--border);
-  text-align: center;
+  position:sticky;
+  top:0;
+  background:var(--bg-main);
+  color:var(--accent);
+  padding:10px;
+  border-bottom:1px solid var(--border);
+  text-align:center;
 }
-
 tbody td {
-  padding: 9px;
-  border-bottom: 1px solid #21262d;
-  text-align: center;
+  padding:9px;
+  border-bottom:1px solid #21262d;
+  text-align:center;
 }
-
 tbody tr:hover {
-  background: rgba(88,166,255,.05);
+  background:rgba(88,166,255,.05);
 }
 
-/* ===============================
-   VERDICT COLORS
-================================ */
-.BUY { color: var(--buy); font-weight: 600; }
-.WATCH { color: var(--watch); font-weight: 600; }
-.AVOID { color: var(--avoid); font-weight: 600; }
+/* ===== VERDICTS ===== */
+.BUY { color:var(--buy); font-weight:600; }
+.WATCH { color:var(--watch); font-weight:600; }
+.AVOID { color:var(--avoid); font-weight:600; }
 
-/* ===============================
-   NOTES
-================================ */
+/* ===== TEACHING SECTION ===== */
 details {
-  margin-top: 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
+  margin-top:22px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:14px 16px;
 }
-
 summary {
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--accent);
+  cursor:pointer;
+  font-size:13px;
+  color:var(--accent);
 }
-
-details table {
-  margin-top: 10px;
-  font-size: 12px;
+.help-table {
+  width:100%;
+  margin-top:12px;
+  font-size:12.5px;
+  border-collapse:collapse;
 }
-
-details td {
-  text-align: left;
+.help-table td {
+  padding:7px;
+  border-bottom:1px solid #21262d;
 }
-
 .footer-note {
-  margin-top: 8px;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-/* ===============================
-   ANIMATIONS
-================================ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  margin-top:8px;
+  font-size:11px;
+  color:var(--text-muted);
 }
 </style>
 </head>
@@ -198,7 +161,6 @@ details td {
   <p>Fundamental score-based stock analysis</p>
 </div>
 
-<!-- MAIN -->
 <div class="container">
 
   <!-- INPUT -->
@@ -210,21 +172,20 @@ COALINDIA</textarea>
   </div>
 
   <!-- RESULTS -->
-  <div id="results" class="table-wrap" style="display:none">
+  <div id="results" class="table-wrap">
     <table>
       <thead>
         <tr>
           <th>Stock</th>
-          <th>Price</th>
+          <th>LTP</th>
           <th>M.Cap</th>
           <th>52W H</th>
           <th>52W L</th>
           <th>P/E</th>
-          <th>Book</th>
+          <th>BV</th>
           <th>ROE</th>
           <th>ROCE</th>
           <th>Div %</th>
-          <th>Face</th>
           <th>Score</th>
           <th>Verdict</th>
           <th>Remarks</th>
@@ -234,25 +195,32 @@ COALINDIA</textarea>
     </table>
   </div>
 
-  <!-- NOTES -->
+  <!-- TEACHING / HELP -->
   <details>
-    <summary>📘 How to read this analysis</summary>
+    <summary>📘 How to Invest – Key Metrics & Steps</summary>
 
-    <table>
-      <tr><td>Price</td><td>Current market price</td></tr>
-      <tr><td>Market Cap</td><td>Total market value of the company</td></tr>
-      <tr><td>52W High / Low</td><td>Price range in last 1 year</td></tr>
-      <tr><td>P/E</td><td>Valuation relative to earnings</td></tr>
-      <tr><td>Book Value</td><td>Net asset value per share</td></tr>
-      <tr><td>ROE / ROCE</td><td>Capital efficiency metrics</td></tr>
-      <tr><td>Dividend %</td><td>Annual income return</td></tr>
-      <tr><td>Score</td><td>Overall fundamental strength (0–6)</td></tr>
+    <table class="help-table">
+      <tr><td><b>LTP</b></td><td>Last Traded Price (current market price)</td></tr>
+      <tr><td><b>M.Cap</b></td><td>Total market value of the company</td></tr>
+      <tr><td><b>52W H/L</b></td><td>Price range in the last 1 year</td></tr>
+      <tr><td><b>P/E</b></td><td>Price paid for ₹1 of earnings</td></tr>
+      <tr><td><b>BV</b></td><td>Book Value – net assets per share</td></tr>
       <tr>
-        <td>Verdict</td>
+        <td><b>ROE</b></td>
+        <td>Return on Equity – profit generated from shareholders’ capital</td>
+      </tr>
+      <tr>
+        <td><b>ROCE</b></td>
+        <td>Return on Capital Employed – profit from total business capital</td>
+      </tr>
+      <tr><td><b>Div %</b></td><td>Annual dividend income return</td></tr>
+      <tr><td><b>Score</b></td><td>Overall fundamental strength (0–6)</td></tr>
+      <tr>
+        <td><b>Verdict</b></td>
         <td>
-          <span class="BUY">BUY</span> ·
-          <span class="WATCH">WATCH</span> ·
-          <span class="AVOID">AVOID</span>
+          <span class="BUY">BUY</span> – Strong business<br>
+          <span class="WATCH">WATCH</span> – Mixed signals<br>
+          <span class="AVOID">AVOID</span> – Weak or risky
         </td>
       </tr>
     </table>
@@ -265,28 +233,23 @@ COALINDIA</textarea>
 </div>
 
 <script>
-function safe(v) {
-  return (v === null || v === undefined) ? "-" : v;
-}
+function safe(v){ return (v===null||v===undefined) ? "-" : v; }
 
-function analyze() {
-  const stocks = document.getElementById("stocks").value
-    .split("\n")
-    .map(s => s.trim())
-    .filter(Boolean);
+function analyze(){
+  const stocks=document.getElementById("stocks").value
+    .split("\n").map(s=>s.trim()).filter(Boolean);
 
-  fetch("/analyze", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ stocks })
+  fetch("/analyze",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ stocks })
   })
-  .then(r => r.json())
-  .then(data => {
-    const tbody = document.querySelector("tbody");
-    tbody.innerHTML = "";
-
-    data.forEach(r => {
-      tbody.innerHTML += `
+  .then(r=>r.json())
+  .then(data=>{
+    const tbody=document.querySelector("tbody");
+    tbody.innerHTML="";
+    data.forEach(r=>{
+      tbody.innerHTML+=`
         <tr>
           <td>${safe(r.Stock)}</td>
           <td>${safe(r.Price)}</td>
@@ -298,14 +261,12 @@ function analyze() {
           <td>${safe(r.ROE)}</td>
           <td>${safe(r.ROCE)}</td>
           <td>${safe(r["Div %"])}</td>
-          <td>${safe(r["Face Value"])}</td>
           <td>${safe(r.Score)}</td>
           <td class="${r.Verdict}">${safe(r.Verdict)}</td>
           <td>${safe(r.Remarks)}</td>
         </tr>`;
     });
-
-    document.getElementById("results").style.display = "block";
+    document.getElementById("results").style.display="block";
   });
 }
 </script>
