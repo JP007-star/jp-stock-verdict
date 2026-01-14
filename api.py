@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from data_engine import analyze
@@ -12,25 +11,24 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze_api():
-    try:
-        data = request.get_json(force=True)
-        stocks = data.get("stocks", [])
-        results = []
+    data = request.get_json(force=True)
+    stocks = data.get("stocks", [])
 
-        for s in stocks:
+    results = []
+    for s in stocks:
+        try:
             r = analyze(s)
             if r:
                 results.append(r)
+        except Exception as e:
+            results.append({
+                "Stock": s,
+                "Verdict": "ERROR",
+                "Score": 0,
+                "Interpretation": str(e)
+            })
 
-        return jsonify(results)
-
-    except Exception as e:
-        # 🔥 CRITICAL: always return JSON
-        return jsonify({
-            "error": "Internal error",
-            "details": str(e)
-        }), 500
+    return jsonify(results)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -4,176 +4,8 @@
 <meta charset="UTF-8">
 <title>JP StockVerdict</title>
 
-<style>
-:root{
-  --bg:#0d1117;
-  --card:#161b22;
-  --border:#30363d;
-  --text:#c9d1d9;
-  --muted:#8b949e;
-  --blue:#58a6ff;
-  --buy:#3fb950;
-  --watch:#d29922;
-  --avoid:#f85149;
-}
+<link rel="stylesheet" href="/static/style.css">
 
-*{ box-sizing:border-box; }
-
-body{
-  margin:0;
-  font-family:Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* ===== HEADER ===== */
-.header{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:18px 28px;
-  border-bottom:1px solid var(--border);
-}
-.header img{
-  width:42px;
-  height:42px;
-}
-.header h1{
-  margin:0;
-  font-size:20px;
-  color:var(--blue);
-}
-.header p{
-  margin:2px 0 0;
-  font-size:12px;
-  color:var(--muted);
-}
-
-/* ===== CONTAINER ===== */
-.container{ padding:26px 28px; }
-
-/* ===== STEP FLOW ===== */
-.steps{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-  margin-bottom:24px;
-}
-.step{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:14px;
-  font-size:13px;
-}
-.step span{
-  color:var(--blue);
-  font-weight:600;
-  font-size:12px;
-}
-
-/* ===== INPUT ===== */
-.input-bar{
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-}
-textarea{
-  width:260px;
-  height:90px;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:10px;
-  font-size:13px;
-  resize:none;
-}
-textarea:focus{
-  outline:none;
-  border-color:var(--blue);
-}
-button{
-  height:40px;
-  padding:0 22px;
-  border:none;
-  border-radius:6px;
-  font-size:13px;
-  color:#fff;
-  background:linear-gradient(135deg,#238636,#2ea043);
-  cursor:pointer;
-  transition:.15s;
-}
-button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 14px rgba(46,160,67,.35);
-}
-
-/* ===== TABLE ===== */
-.table-wrap{
-  margin-top:22px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:8px;
-  overflow:hidden;
-  display:none;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12.5px;
-}
-thead th{
-  position:sticky;
-  top:0;
-  background:var(--bg);
-  color:var(--blue);
-  padding:10px;
-  border-bottom:1px solid var(--border);
-}
-tbody td{
-  padding:9px;
-  border-bottom:1px solid #21262d;
-  text-align:center;
-}
-tbody tr:hover{
-  background:rgba(88,166,255,.05);
-}
-
-/* ===== VERDICT COLORS ===== */
-.BUY{ color:var(--buy); font-weight:600; }
-.WATCH{ color:var(--watch); font-weight:600; }
-.AVOID{ color:var(--avoid); font-weight:600; }
-
-/* ===== HELP ===== */
-details{
-  margin-top:22px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:14px 16px;
-}
-summary{
-  cursor:pointer;
-  color:var(--blue);
-  font-size:13px;
-}
-.help-table{
-  width:100%;
-  margin-top:12px;
-  font-size:12.5px;
-  border-collapse:collapse;
-}
-.help-table td{
-  padding:7px;
-  border-bottom:1px solid #21262d;
-}
-.footer-note{
-  margin-top:10px;
-  font-size:11px;
-  color:var(--muted);
-}
-</style>
 </head>
 
 <body>
@@ -183,119 +15,131 @@ summary{
   <img src="/static/jp.png" alt="JP Logo">
   <div>
     <h1>JP StockVerdict</h1>
-    <p>Step-by-step fundamental stock analysis</p>
+    <p>10-step professional fundamental analysis</p>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- INVESTING FLOW -->
-  <div class="steps">
-    <div class="step"><span>STEP 1</span><br><b>ROE & ROCE</b><br>Business & capital efficiency</div>
-    <div class="step"><span>STEP 2</span><br><b>P/E & Book Value</b><br>Valuation check</div>
-    <div class="step"><span>STEP 3</span><br><b>52W High / Low</b><br>Risk & timing</div>
-    <div class="step"><span>STEP 4</span><br><b>Dividend</b><br>Income quality</div>
-    <div class="step"><span>STEP 5</span><br><b>Score → Verdict</b><br>Final decision</div>
-  </div>
+<!-- STEPS -->
+<div class="steps">
+  <div class="step"><span>STEP 1</span><br><b>Business Quality</b><br>Moat, brand, sector tailwinds</div>
+  <div class="step"><span>STEP 2</span><br><b>ROCE</b><br>True business efficiency</div>
+  <div class="step"><span>STEP 3</span><br><b>Cash Flow</b><br>Profit converted to cash</div>
+  <div class="step"><span>STEP 4</span><br><b>Debt Safety</b><br>D/E & interest coverage</div>
+  <div class="step"><span>STEP 5</span><br><b>ROE</b><br>Shareholder returns</div>
+  <div class="step"><span>STEP 6</span><br><b>Growth</b><br>Sales & profit consistency</div>
+  <div class="step"><span>STEP 7</span><br><b>Promoter Strength</b><br>Holding & governance</div>
+  <div class="step"><span>STEP 8</span><br><b>Valuation</b><br>P/E, PEG, P/B</div>
+  <div class="step"><span>STEP 9</span><br><b>Dividend</b><br>Capital discipline</div>
+  <div class="step"><span>STEP 10</span><br><b>Risk & Timing</b><br>52W range, margin of safety</div>
+</div>
 
-  <!-- INPUT -->
-  <div class="input-bar">
-    <textarea id="stocks">ITC
+<!-- INPUT -->
+<div class="input-bar">
+<textarea id="stocks">ITC
 VEDL
 COALINDIA</textarea>
-    <button onclick="analyze()">Analyze</button>
-  </div>
+<button onclick="analyze()">Analyze</button>
+</div>
 
-  <!-- RESULTS -->
-  <div id="results" class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Stock</th>
-          <th>Price</th>
-          <th>Market Cap (₹ Cr)</th>
-          <th>52W High</th>
-          <th>52W Low</th>
-          <th>P/E</th>
-          <th>Book Value</th>
-          <th>ROE</th>
-          <th>ROCE</th>
-          <th>Div %</th>
-          <th>Face Value</th>
-          <th>Score</th>
-          <th>Verdict</th>
-          <th>Remarks</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <!-- HELP -->
-  <details>
-    <summary>📘 How to read these parameters</summary>
-    <table class="help-table">
-      <tr><td><b>Price</b></td><td>Current market price</td></tr>
-      <tr><td><b>Market Cap</b></td><td>Total company valuation</td></tr>
-      <tr><td><b>52W High / Low</b></td><td>1-year price range</td></tr>
-      <tr><td><b>P/E</b></td><td>Valuation vs earnings</td></tr>
-      <tr><td><b>Book Value</b></td><td>Net asset value per share</td></tr>
-      <tr><td><b>ROE</b></td><td>Return on Equity (shareholder efficiency)</td></tr>
-      <tr><td><b>ROCE</b></td><td>Return on Capital Employed (business efficiency)</td></tr>
-      <tr><td><b>Dividend %</b></td><td>Annual income return</td></tr>
-      <tr><td><b>Score</b></td><td>Overall fundamental strength (0–6)</td></tr>
-      <tr>
-        <td><b>Verdict</b></td>
-        <td>
-          <span class="BUY">BUY</span> – strong fundamentals<br>
-          <span class="WATCH">WATCH</span> – mixed signals<br>
-          <span class="AVOID">AVOID</span> – weak or risky
-        </td>
-      </tr>
-    </table>
-    <div class="footer-note">⚠️ Educational only. Not investment advice.</div>
-  </details>
+<!-- RESULTS -->
+<div id="results" class="table-wrap">
+<table>
+<thead>
+<tr>
+  <th>Stock</th>
+  <th>Verdict</th>
+  <th>Score</th>
+  <th>ROCE</th>
+  <th>ROE</th>
+  <th>Profit Growth</th>
+  <th>Sales Growth</th>
+  <th>Debt</th>
+  <th>Debt / Equity</th>
+  <th>Cash Flow (₹ Cr)</th>
+  <th>P/E</th>
+  <th>PEG</th>
+  <th>P/B</th>
+  <th>Book Value</th>
+  <th>Intrinsic Value</th>
+  <th>Dividend Yield</th>
+  <th>52W High</th>
+  <th>52W Low</th>
+  <th>Price</th>
+  <th>Market Cap (₹ Cr)</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
 
 </div>
 
 <script>
 function safe(v){
-  return (v===null || v===undefined || v==="") ? "-" : v;
+  return (v === null || v === undefined || v === "") ? "-" : v;
+}
+
+function pct(v){
+  return (v === null || v === undefined) ? "-" : v + "%";
+}
+
+function cr(v){
+  return (v === null || v === undefined) ? "-" : v.toLocaleString("en-IN");
 }
 
 function analyze(){
-  const stocks=document.getElementById("stocks").value
-    .split("\n").map(s=>s.trim()).filter(Boolean);
+  const stocks = document.getElementById("stocks").value
+    .split("\n")
+    .map(s => s.trim())
+    .filter(Boolean);
 
-  fetch("/analyze",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ stocks })
+  const tbody = document.querySelector("tbody");
+  tbody.innerHTML = "";
+  document.getElementById("results").style.display = "block";
+
+  fetch("/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ stocks })
   })
-  .then(r=>r.json())
-  .then(data=>{
-    const tbody=document.querySelector("tbody");
-    tbody.innerHTML="";
-    data.forEach(r=>{
-      tbody.innerHTML+=`
-      <tr>
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(r => {
+      tbody.innerHTML += `
+      <tr class="${r.Verdict}">
         <td>${safe(r.Stock)}</td>
-        <td>${safe(r.Price)}</td>
-        <td>${safe(r["Market Cap (₹ Cr)"])}</td>
+        <td class="${r.Verdict}">${safe(r.Verdict)}</td>
+        <td>${safe(r.Score)}</td>
+
+        <td>${safe(r.ROCE)}</td>
+        <td>${safe(r.ROE)}</td>
+
+        <td>${pct(r["Profit Growth"])}</td>
+        <td>${pct(r["Sales Growth"])}</td>
+
+        <td>${safe(r.Debt)}</td>
+        <td>${safe(r["Debt / Equity"])}</td>
+
+        <td>${cr(r["Cash Flow"])}</td>
+
+        <td>${safe(r["P/E"])}</td>
+        <td>${safe(r.PEG)}</td>
+
+        <td>${safe(r["P/B"])}</td>
+        <td>${safe(r["Book Value"])}</td>
+        <td>${safe(r["Intrinsic Value"])}</td>
+
+        <td>${pct(r["Dividend Yield"])}</td>
+
         <td>${safe(r["52W High"])}</td>
         <td>${safe(r["52W Low"])}</td>
-        <td>${safe(r["P/E"])}</td>
-        <td>${safe(r["Book Value"])}</td>
-        <td>${safe(r.ROE)}</td>
-        <td>${safe(r.ROCE)}</td>
-        <td>${safe(r["Div %"])}</td>
-        <td>${safe(r["Face Value"])}</td>
-        <td>${safe(r.Score)}</td>
-        <td class="${r.Verdict}">${safe(r.Verdict)}</td>
-        <td>${safe(r.Remarks)}</td>
+
+        <td>${safe(r.Price)}</td>
+        <td>${cr(r["Market Cap"])}</td>
       </tr>`;
     });
-    document.getElementById("results").style.display="block";
   });
 }
 </script>
